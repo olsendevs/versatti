@@ -1,8 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-export default function TableFilters() {
-  const [selected, setSelected] = useState('serralheiro');
+export default function TableFilters( {selected, setSelected}: any) {
   const handleFilter = (item: any) => {
     setSelected(item);
   };
@@ -11,14 +10,14 @@ export default function TableFilters() {
     <div className="flex space-x-2">
       <div
         className={
-          selected == 'serralheiro'
+          selected == 5
             ? `w-[35px] p-1 border 
           border-4 rounded border-green-500`
             : `w-[35px] p-1 border 
             border-4 rounded border-orange-500 cursor-pointer`
         }
         onClick={() => {
-          handleFilter('serralheiro');
+          handleFilter(5);
         }}
       >
         <Image
@@ -30,14 +29,14 @@ export default function TableFilters() {
       </div>
       <div
         className={
-          selected == 'impressao'
+          selected == 1
             ? `w-[35px] p-1 border 
           border-4 rounded border-green-500`
             : `w-[35px] p-1 border 
             border-4 rounded border-orange-500 cursor-pointer`
         }
         onClick={() => {
-          handleFilter('impressao');
+          handleFilter(1);
         }}
       >
         <Image
@@ -49,14 +48,14 @@ export default function TableFilters() {
       </div>
       <div
         className={
-          selected == 'tinturaria'
+          selected == 6
             ? `w-[35px] p-1 border 
           border-4 rounded border-green-500`
             : `w-[35px] p-1 border 
             border-4 rounded border-orange-500 cursor-pointer`
         }
         onClick={() => {
-          handleFilter('tinturaria');
+          handleFilter(6);
         }}
       >
         <Image
@@ -68,14 +67,14 @@ export default function TableFilters() {
       </div>
       <div
         className={
-          selected == 'eletricista'
+          selected == 8
             ? `w-[35px] p-1 border 
           border-4 rounded border-green-500`
             : `w-[35px] p-1 border 
             border-4 rounded border-orange-500 cursor-pointer`
         }
         onClick={() => {
-          handleFilter('eletricista');
+          handleFilter(8);
         }}
       >
         <Image
@@ -87,14 +86,14 @@ export default function TableFilters() {
       </div>
       <div
         className={
-          selected == 'router'
+          selected == 2
             ? `w-[35px] p-1 border 
           border-4 rounded border-green-500`
             : `w-[35px] p-1 border 
             border-4 rounded border-orange-500 cursor-pointer`
         }
         onClick={() => {
-          handleFilter('router');
+          handleFilter(2);
         }}
       >
         <Image
@@ -107,14 +106,14 @@ export default function TableFilters() {
       </div>
       <div
         className={
-          selected == 'laser'
+          selected == 4
             ? `w-[35px] p-1 border 
           border-4 rounded border-green-500`
             : `w-[35px] p-1 border 
             border-4 rounded border-orange-500 cursor-pointer`
         }
         onClick={() => {
-          handleFilter('laser');
+          handleFilter(4);
         }}
       >
         <Image

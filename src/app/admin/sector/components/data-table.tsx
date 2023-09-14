@@ -18,7 +18,7 @@ import { useEffect, useState } from 'react';
 export default function DataTable() {
   const [sectors, setSectors] = useState([]);
   const [departament, setDepartament] =
-    useState('SERRALHEIRA');
+    useState(5);
 
   async function fetchData() {
     try {
@@ -27,7 +27,7 @@ export default function DataTable() {
       );
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/productions`,
+        `${process.env.NEXT_PUBLIC_API_URL}/productions?department_id=${departament}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ export default function DataTable() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [departament]);
 
   return (
     <div
@@ -62,7 +62,7 @@ export default function DataTable() {
           Setores de produção - Usinagem
         </h6>
         <div className="ml-auto flex items-center space-x-5">
-          <TableFilters />
+          <TableFilters selected={departament} setSelected={setDepartament}/>
           <ReloadIcon
             className="cursor-pointer mr-1 h-4 w-4 text-[#FF8800]"
             onClick={() => {
@@ -92,7 +92,7 @@ export default function DataTable() {
                   Math.random() * (100 - 1) + 1,
                 )}
                 os={sector.service_order_id}
-                product={sector.order_description}
+                product={sector.product_description}
                 date={
                   sector.installation_date.split('T')[0]
                 }
