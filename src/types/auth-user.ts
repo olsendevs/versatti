@@ -1,6 +1,5 @@
 export type AuthUser = {
-  email: string;
-  type: string;
+  departament: string;
   accessToken: string;
   id: string;
 };

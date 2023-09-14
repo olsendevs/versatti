@@ -13,8 +13,40 @@ import { ClipboardIcon } from '@radix-ui/react-icons';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import SectorRow from './table-row';
 import TableFilters from './table-filters';
+import { useEffect, useState } from 'react';
 
 export default function DataTable() {
+  const [sectors, setSectors] = useState([]);
+  const [departament, setDepartament] =
+    useState('SERRALHEIRA');
+
+  async function fetchData() {
+    try {
+      const token = JSON.parse(
+        localStorage.getItem('token') || '',
+      );
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/productions`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const responseData = await response.json();
+
+      setSectors(responseData.items);
+    } catch (error) {
+      console.error('Error:', error);
+      setSectors([]);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div
       className="rounded-lg border w-[98%]
@@ -33,7 +65,10 @@ export default function DataTable() {
           <TableFilters />
           <ReloadIcon
             className="cursor-pointer mr-1 h-4 w-4 text-[#FF8800]"
-            onClick={() => {}}
+            onClick={() => {
+              setSectors([]);
+              fetchData();
+            }}
           />
         </div>
       </div>
@@ -50,15 +85,27 @@ export default function DataTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <SectorRow
-            os={'000001'}
-            product={'Revestimento ACM'}
-            date={'10/10/2023'}
-            size={'200x100'}
-            material={'ACM'}
-            color={'Azul'}
-            machine={'Router'}
-          />
+          {sectors.map((sector: any) => {
+            return (
+              <SectorRow
+                key={Math.floor(
+                  Math.random() * (100 - 1) + 1,
+                )}
+                os={sector.service_order_id}
+                product={sector.order_description}
+                date={
+                  sector.installation_date.split('T')[0]
+                }
+                size={`${sector.width}x${sector.height}`}
+                material={sector.materials[0].material_type}
+                color={sector.materials[0].colors}
+                machine={
+                  sector.production_department
+                    .department_name
+                }
+              />
+            );
+          })}
         </TableBody>
       </Table>
     </div>

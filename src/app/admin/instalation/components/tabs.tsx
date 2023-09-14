@@ -6,11 +6,7 @@ import Link from 'next/link';
 export default function Tabs() {
   return (
     <div className="ml-auto">
-      <Link
-        href="/admin/service-order"
-        legacyBehavior
-        passHref
-      >
+      <Link href="/admin/service-order" passHref>
         <Button
           className="bg-[#F3F6FE] text-black 
           border border-gray-300 rounded-r-none
@@ -19,7 +15,7 @@ export default function Tabs() {
           Ordem
         </Button>
       </Link>
-      <Link href="/admin/sector" legacyBehavior passHref>
+      <Link href="/admin/sector" passHref>
         <Button
           className="bg-[#F3F6FE] text-black 
           border border-gray-300 rounded-none
@@ -29,11 +25,7 @@ export default function Tabs() {
           Setor
         </Button>
       </Link>
-      <Link
-        href="/admin/instalation"
-        legacyBehavior
-        passHref
-      >
+      <Link href="/admin/instalation" passHref>
         <Button
           className="text-white bg-[#FF8800] 
           rounded-l-none hover:bg-[#FF8800] hover:text-white"

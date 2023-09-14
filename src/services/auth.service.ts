@@ -1,3 +1,4 @@
+import { AuthUser } from '@/types/auth-user';
 import axios, { AxiosInstance } from 'axios';
 export class AuthService {
   protected readonly instance: AxiosInstance;
@@ -9,18 +10,24 @@ export class AuthService {
     });
   }
 
-  login = (email: string, password: string) => {
+  login = (username: string, password: string) => {
     return this.instance
-      .post('/auth/login', {
-        email,
+      .post('/users/login', {
+        username,
         password,
       })
       .then((res: any) => {
         return {
-          email: email,
-          id: res.data.user._id,
-          accessToken: res.data.token,
-          type: res.data.type,
+          id: res.data.user_id,
+          accessToken: res.data.access_token,
+          departament: res.data.department,
+        };
+      })
+      .catch((res: any) => {
+        return {
+          id: '',
+          accessToken: '',
+          departament: '',
         };
       });
   };

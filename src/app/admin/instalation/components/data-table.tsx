@@ -12,8 +12,38 @@ import {
 import { ClipboardIcon } from '@radix-ui/react-icons';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import InstalationRow from './table-row';
+import { useEffect, useState } from 'react';
 
 export default function DataTable() {
+  const [instalations, setInstalations] = useState([]);
+
+  async function fetchData() {
+    try {
+      const token = JSON.parse(
+        localStorage.getItem('token') || '',
+      );
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/productions`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const responseData = await response.json();
+
+      setInstalations(responseData.items);
+    } catch (error) {
+      console.error('Error:', error);
+      setInstalations([]);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div
       className="rounded-lg border w-[98%]
@@ -29,7 +59,10 @@ export default function DataTable() {
         <div className="ml-auto flex items-center space-x-5">
           <ReloadIcon
             className="cursor-pointer mr-1 h-4 w-4 text-[#FF8800]"
-            onClick={() => {}}
+            onClick={() => {
+              setInstalations([]);
+              fetchData();
+            }}
           />
         </div>
       </div>
@@ -44,15 +77,24 @@ export default function DataTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <InstalationRow
-            os={'000001'}
-            product={'Revestimento ACM'}
-            date={'10/10/2023'}
-            time={'4 Horas'}
-            location={
-              'Rua avenida henrique eroles, 1197 - Mogi das Cruzes'
-            }
-          />
+          {instalations.map((instalation: any) => {
+            return (
+              <InstalationRow
+                key={Math.floor(
+                  Math.random() * (99999 - 1) + 1,
+                )}
+                os={instalation.service_order_id}
+                product={instalation.order_description}
+                date={
+                  instalation.installation_date.split(
+                    'T',
+                  )[0]
+                }
+                time={instalation.execution_time_minutes}
+                location={instalation.address}
+              />
+            );
+          })}
         </TableBody>
       </Table>
     </div>

@@ -13,8 +13,37 @@ import { ClipboardIcon } from '@radix-ui/react-icons';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import OrderTableRow from './table-row';
+import { useEffect, useState } from 'react';
 
 export default function DataTable() {
+  const [orderServices, setOrderServices] = useState([]);
+  async function fetchData() {
+    try {
+      const token = JSON.parse(
+        localStorage.getItem('token') || '',
+      );
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/service_orders`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const responseData = await response.json();
+
+      setOrderServices(responseData.items);
+    } catch (error) {
+      console.error('Error:', error);
+      setOrderServices([]);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div
       className="rounded-lg border w-[98%]
@@ -31,7 +60,10 @@ export default function DataTable() {
         </h6>
         <ReloadIcon
           className="cursor-pointer ml-auto mr-1 h-4 w-4 text-[#FF8800]"
-          onClick={() => {}}
+          onClick={() => {
+            setOrderServices([]);
+            fetchData();
+          }}
         />
       </div>
       <Table className="">
@@ -46,12 +78,19 @@ export default function DataTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <OrderTableRow
-            os={'000001'}
-            product={'Revestimento ACM'}
-            date={'10/10/2023'}
-            execution={''}
-          />
+          {orderServices.map((service: any) => {
+            return (
+              <OrderTableRow
+                key={service.service_order_id}
+                os={service.service_order_id}
+                product={service.order_description}
+                date={
+                  service.installation_date.split('T')[0]
+                }
+                execution={service.products}
+              />
+            );
+          })}
         </TableBody>
       </Table>
     </div>

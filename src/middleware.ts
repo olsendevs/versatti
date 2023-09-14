@@ -28,7 +28,7 @@ export async function middleware(request: NextRequest) {
     currentUser
   ) {
     return NextResponse.redirect(
-      new URL('/admin/home', request.url),
+      new URL('/admin/service-order', request.url),
     );
   }
 }

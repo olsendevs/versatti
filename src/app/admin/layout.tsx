@@ -190,11 +190,12 @@ export default function RootLayout({
         </List>
         <Link
           onClick={() => {
+            console.log('aa');
             logout();
           }}
           href="/auth"
-          legacyBehavior
           passHref
+          className="mt-auto"
         >
           <div className="mt-auto mb-5 ml-1 flex items-center cursor-pointer">
             <Image
