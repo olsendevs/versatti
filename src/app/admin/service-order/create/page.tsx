@@ -7,12 +7,15 @@ import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { Toaster } from '@/components/ui/toaster';
+import { useLoading } from '@/components/ui/is-loading';
 
 export default function CreateServiceOrderPage() {
   const [formData, setFormData] = React.useState({});
   const [orderData, setOrderData] = React.useState({});
+  const { setIsLoading } = useLoading();
   const router = useRouter();
   const handleSubmit = async () => {
+    setIsLoading(true);
     let products: Array<any> = [];
     const productsKeys = Object.entries(formData);
     for (var x = 0; x < productsKeys.length / 4; x++) {
@@ -65,6 +68,7 @@ export default function CreateServiceOrderPage() {
     } catch (error) {
       console.error('Error:', error);
     }
+    setIsLoading(false);
   };
   return (
     <div className="">
@@ -78,7 +82,7 @@ export default function CreateServiceOrderPage() {
       />
       <div className="w-[98%] flex">
         <Button
-          className="bg-[#02AE13] ml-auto font-extralight p-2 px-6 my-2 
+          className="bg-[#02AE13] ml-auto font-extralight p-2 px-6 my-6 
         hover:bg-green-600"
           type="submit"
           onClick={handleSubmit}

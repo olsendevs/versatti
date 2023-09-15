@@ -7,7 +7,6 @@ import DataTable from './components/data-table';
 export default function ServiceOrderPage() {
   return (
     <div className="">
-      <Filters />
       <DataTable />
     </div>
   );

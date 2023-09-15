@@ -23,6 +23,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useLogout } from '../../hooks/auth/useLogout';
+import { useLoading } from '@/components/ui/is-loading';
+import { LoadingSpinner } from '@/components/ui/loading-spinner';
 
 const drawerWidth: number = 240;
 
@@ -89,6 +91,7 @@ export default function RootLayout({
 }) {
   const { logout } = useLogout();
   const [open, setOpen] = React.useState(true);
+  const { isLoading } = useLoading();
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -222,6 +225,7 @@ export default function RootLayout({
           {children}
         </div>
       </Box>
+      <LoadingSpinner visible={isLoading} />
     </Box>
   );
 }

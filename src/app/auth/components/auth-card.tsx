@@ -1,5 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useLoading } from '@/components/ui/is-loading';
+import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { Toaster } from '@/components/ui/toaster';
 import { useToast } from '@/components/ui/use-toast';
 import { useLogin } from '@/hooks/auth/useLogin';
@@ -11,6 +13,8 @@ import { useState } from 'react';
 export default function AuthCard() {
   const { login } = useLogin();
   const { toast } = useToast();
+  const { isLoading, setIsLoading } = useLoading();
+
   const [loginInputs, setLoginInputs] = useState({
     username: '',
     password: '',
@@ -21,6 +25,7 @@ export default function AuthCard() {
   const router = useRouter();
 
   const handleLogin = async () => {
+    setIsLoading(true);
     setUsernameError(false);
     setPasswordError(false);
 
@@ -49,6 +54,8 @@ export default function AuthCard() {
         window.location.reload();
       }
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -109,6 +116,7 @@ export default function AuthCard() {
         Acessar
       </Button>
       <Toaster />
+      <LoadingSpinner visible={isLoading} />
     </div>
   );
 }

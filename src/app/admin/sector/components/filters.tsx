@@ -3,8 +3,10 @@ import { Input } from '@/components/ui/input';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import Tabs from './tabs';
 import Link from 'next/link';
+import { useState } from 'react';
 
-export default function Filters() {
+export default function Filters({ searchData }: any) {
+  const [terms, setTerms] = useState('');
   return (
     <div className="bg-white w-[98%] p-4 rad rounded-xl flex items-center space-x-2">
       <div className="flex items-center space-x-2">
@@ -12,14 +14,18 @@ export default function Filters() {
           <MagnifyingGlassIcon
             className="cursor-pointer 
             block ml-1 h-6 w-6 text-[#FF8800]"
-            onClick={() => {}}
+            onClick={() => {
+              searchData(terms);
+            }}
           />
         </div>
         <Input
           className="w-[300px] rounded-lg border border-blue-100 
         bg-white shadow-md pl-4 text-xs"
           type="text"
-          placeholder="Buscar ordem de serviço..."
+          placeholder="Buscar setor..."
+          value={terms}
+          onChange={(e) => setTerms(e.target.value)}
         />
         <Link
           href="/admin/service-order/create"

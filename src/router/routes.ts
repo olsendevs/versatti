@@ -5,6 +5,7 @@ export const protectedRoutes = [
   '/admin/instalation',
   '/admin/sector',
   '/admin/planing',
+  '/'
 ];
 export const authRoutes = ['/auth'];
 export const publicRoutes = [];
