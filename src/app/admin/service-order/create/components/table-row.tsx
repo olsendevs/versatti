@@ -8,13 +8,16 @@ import {
 } from '@/components/ui/select';
 import { TableRow, TableCell } from '@/components/ui/table';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function ProductsRow({
   handleInputChange,
 }: any) {
   const [productRows, setProductRows] = useState([
     { id: 1 },
+  ]);
+  const [products, setProducts] = useState([
+    { product_description: '', product_id: '' },
   ]);
 
   const addNewProduct = () => {
@@ -31,6 +34,33 @@ export default function ProductsRow({
     }
   };
 
+  async function fetchData() {
+    try {
+      const token = JSON.parse(
+        localStorage.getItem('token') || '',
+      );
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/products/product_description`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const responseData = await response.json();
+
+      setProducts(responseData);
+    } catch (error) {
+      console.error('Error:', error);
+      setProducts([]);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       {productRows.map((row) => (
@@ -44,8 +74,9 @@ export default function ProductsRow({
               name={`quantity_${row.id}`}
               onChange={(e) =>
                 handleInputChange(
-                  `quantity_${row.id}`,
+                  `quantity`,
                   e.target.value,
+                  row.id,
                 )
               }
             />
@@ -54,18 +85,20 @@ export default function ProductsRow({
             <Select
               name={`product_${row.id}`}
               onValueChange={(e) =>
-                handleInputChange(`product_${row.id}`, e)
+                handleInputChange(`product_id`, e, row.id)
               }
             >
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Theme" />
+                <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">
-                  System
-                </SelectItem>
+                {products.map((product: any) => {
+                  return (
+                    <SelectItem value={product.product_id}>
+                      {product.product_description}
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
           </TableCell>
@@ -75,11 +108,12 @@ export default function ProductsRow({
               className=""
               type="number"
               placeholder="Ex: 100"
-              name={`heigth_${row.id}`}
+              name={`height_${row.id}`}
               onChange={(e) =>
                 handleInputChange(
-                  `heigth_${row.id}`,
+                  `height`,
                   e.target.value,
+                  row.id,
                 )
               }
             />
@@ -90,11 +124,12 @@ export default function ProductsRow({
               className=""
               type="number"
               placeholder="Ex: 200"
-              name={`size_${row.id}`}
+              name={`width_${row.id}`}
               onChange={(e) =>
                 handleInputChange(
-                  `size_${row.id}`,
+                  `width`,
                   e.target.value,
+                  row.id,
                 )
               }
             />

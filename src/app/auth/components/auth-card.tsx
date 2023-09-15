@@ -46,6 +46,7 @@ export default function AuthCard() {
         });
       } else {
         router.push('/admin/service-order');
+        window.location.reload();
       }
     }
   };

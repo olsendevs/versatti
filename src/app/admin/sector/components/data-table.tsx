@@ -97,8 +97,8 @@ export default function DataTable() {
                   sector.installation_date.split('T')[0]
                 }
                 size={`${sector.width}x${sector.height}`}
-                material={sector.materials[0].material_type}
-                color={sector.materials[0].colors}
+                material={sector.materials[0] ? sector.materials[0].material_type : ''}
+                color={sector.materials[0] ? sector.materials[0].colors : ''}
                 machine={
                   sector.production_department
                     .department_name

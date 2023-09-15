@@ -17,8 +17,12 @@ export default function DataTable({
   const handleFieldChange = (
     fieldName: any,
     value: any,
+    id: any,
   ) => {
-    setFormData({ ...formData, [fieldName]: value });
+    setFormData({
+      ...formData,
+      [fieldName + '-' + id]: value,
+    });
   };
 
   return (
