@@ -1,4 +1,3 @@
-import { AuthUser } from '@/types/auth-user';
 import axios, { AxiosInstance } from 'axios';
 export class AuthService {
   protected readonly instance: AxiosInstance;
@@ -23,7 +22,7 @@ export class AuthService {
           departament: res.data.department,
         };
       })
-      .catch((res: any) => {
+      .catch(() => {
         return {
           id: '',
           accessToken: '',

@@ -106,6 +106,7 @@ export default function RootLayout({
         <Toolbar
           sx={{
             pr: '24px',
+            backgroundColor: 'white'
           }}
         >
           <IconButton
@@ -118,14 +119,8 @@ export default function RootLayout({
               ...(open && { display: 'none' }),
             }}
           >
-            <MenuIcon />
+            <MenuIcon color='action' />
           </IconButton>
-          <Image
-            src="/versatti-logo-branco.png"
-            width={50}
-            height={100}
-            alt="Versatti logo"
-          />
         </Toolbar>
       </AppBar>
       <Drawer

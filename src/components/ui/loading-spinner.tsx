@@ -1,4 +1,3 @@
-import zIndex from '@mui/material/styles/zIndex';
 import { Icons } from './icons';
 
 export function LoadingSpinner({

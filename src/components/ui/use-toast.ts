@@ -127,7 +127,7 @@ export const reducer = (state: State, action: Action): State => {
   }
 }
 
-const listeners: Array<(state: State) => void> = []
+const listeners: Array<any> = []
 
 let memoryState: State = { toasts: [] }
 
