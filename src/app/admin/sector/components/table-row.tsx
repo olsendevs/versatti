@@ -1,7 +1,5 @@
 import { TableRow, TableCell } from '@/components/ui/table';
 
-import Image from 'next/image';
-
 export default function SectorRow({
   os,
   product,

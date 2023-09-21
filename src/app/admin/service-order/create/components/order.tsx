@@ -28,10 +28,11 @@ export default function Order({
             })
           }
         />
+
         <Input
           className="rounded-lg border border-blue-100 
             bg-white shadow-md w-[50%] py-2"
-          type="text"
+          type="date"
           placeholder="Prazo"
           value={orderData.deadline_date}
           onChange={(e) =>
@@ -72,7 +73,7 @@ export default function Order({
         <Input
           className="rounded-lg border border-blue-100 
             bg-white shadow-md w-[90%] py-2"
-          type="text"
+          type="date"
           placeholder="Data instalação"
           value={orderData.installation_date}
           onChange={(e) =>

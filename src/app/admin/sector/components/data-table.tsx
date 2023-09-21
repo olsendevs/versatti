@@ -1,13 +1,9 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import {
-  TableCaption,
   TableHeader,
   Table,
   TableRow,
   TableHead,
   TableBody,
-  TableCell,
 } from '@/components/ui/table';
 import { ClipboardIcon } from '@radix-ui/react-icons';
 import { ReloadIcon } from '@radix-ui/react-icons';
@@ -21,6 +17,15 @@ export default function DataTable() {
   const [sectors, setSectors] = useState([]);
   const { setIsLoading } = useLoading();
   const [departament, setDepartament] = useState(5);
+
+  const departamentsTranslation: any = {
+    1: 'Impressão',
+    2: 'Usinagem',
+    4: 'Usinagem a Laser',
+    5: 'Serralheiro',
+    6: 'Tinturaria',
+    8: 'Eletricista',
+  };
 
   async function fetchData() {
     setIsLoading(true);
@@ -89,7 +94,8 @@ export default function DataTable() {
             onClick={() => {}}
           />
           <h6 className="text-sm font-bold">
-            Setores de produção - Usinagem
+            Setores de produção -{' '}
+            {departamentsTranslation[departament]}
           </h6>
           <div className="ml-auto flex items-center space-x-5">
             <TableFilters

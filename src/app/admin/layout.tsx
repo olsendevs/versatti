@@ -6,7 +6,6 @@ import {
   CssBaseline,
   Toolbar,
   IconButton,
-  Typography,
   Divider,
   List,
   ListItemButton,
@@ -195,18 +194,19 @@ export default function RootLayout({
           onClick={() => {
             console.log('aa');
             logout();
+            window.location.href = '/auth';
           }}
           href="/auth"
           passHref
           className="mt-auto"
         >
-          <div className="mt-auto mb-5 ml-1 flex items-center cursor-pointer">
+          <div className="mt-auto mb-5 ml-5 flex items-center cursor-pointer">
             <Image
               src="/sair-icone.png"
               width={30}
               height={30}
               alt="sair icone"
-              className="mr-1"
+              className="mr-5"
             />
             Sair
           </div>

@@ -1,7 +1,8 @@
 import Image from 'next/image';
-import { useState } from 'react';
-
-export default function TableFilters( {selected, setSelected}: any) {
+export default function TableFilters({
+  selected,
+  setSelected,
+}: any) {
   const handleFilter = (item: any) => {
     setSelected(item);
   };

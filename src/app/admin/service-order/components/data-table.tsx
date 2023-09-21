@@ -1,17 +1,12 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import {
-  TableCaption,
   TableHeader,
   Table,
   TableRow,
   TableHead,
   TableBody,
-  TableCell,
 } from '@/components/ui/table';
 import { ClipboardIcon } from '@radix-ui/react-icons';
 import { ReloadIcon } from '@radix-ui/react-icons';
-import Image from 'next/image';
 import OrderTableRow from './table-row';
 import { useEffect, useState } from 'react';
 import { useLoading } from '@/components/ui/is-loading';

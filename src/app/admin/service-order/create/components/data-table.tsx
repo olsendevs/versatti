@@ -6,9 +6,7 @@ import {
   TableBody,
 } from '@/components/ui/table';
 import { ClipboardIcon } from '@radix-ui/react-icons';
-import { ReloadIcon } from '@radix-ui/react-icons';
 import ProductsRow from './table-row';
-import { useState } from 'react';
 
 export default function DataTable({
   formData,

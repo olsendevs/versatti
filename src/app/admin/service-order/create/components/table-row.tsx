@@ -88,13 +88,16 @@ export default function ProductsRow({
                 handleInputChange(`product_id`, e, row.id)
               }
             >
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>
                 {products.map((product: any) => {
                   return (
-                    <SelectItem value={product.product_id}>
+                    <SelectItem
+                      key={product.product_id}
+                      value={product.product_id}
+                    >
                       {product.product_description}
                     </SelectItem>
                   );
