@@ -5,12 +5,13 @@ import {
   TableHead,
   TableBody,
 } from '@/components/ui/table';
-import { ClipboardIcon } from '@radix-ui/react-icons';
+import Image from 'next/image';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import InstalationRow from './table-row';
 import { useEffect, useState } from 'react';
 import { useLoading } from '@/components/ui/is-loading';
 import Filters from './filters';
+import { Pagination } from '@/components/ui/pagination';
 
 export default function DataTable() {
   const [instalations, setInstalations] = useState([]);
@@ -81,11 +82,13 @@ export default function DataTable() {
       shadow-md "
       >
         <div className="flex align-center items-center p-4 ">
-          <ClipboardIcon
-            className="mr-1 h-4 w-4 text-[#FF8800]"
-            onClick={() => {}}
+          <Image
+            src="/titulo-icone.png"
+            alt="icon"
+            width={18}
+            height={18}
           />
-          <h6 className="text-sm font-bold">Instalação</h6>
+          <h6 className="text-sm font-bold ml-2">Instalação</h6>
           <div className="ml-auto flex items-center space-x-5">
             <ReloadIcon
               className="cursor-pointer mr-1 h-4 w-4 text-[#FF8800]"
@@ -127,74 +130,7 @@ export default function DataTable() {
             })}
           </TableBody>
         </Table>
-        <div className="flex justify-center mt-9 mb-4 space-x-2 text-base">
-          <button
-            onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="border border-solid px-2 disabled:bg-gray-200"
-          >
-            {'<'}
-          </button>
-          {currentPage > 2 ? (
-            <button onClick={() => setCurrentPage(1)}>
-              <h2 className="px-2  border border-solid border-gray-200">
-                1
-              </h2>
-            </button>
-          ) : (
-            <></>
-          )}
-          {currentPage > 1 ? (
-            <button
-              onClick={() =>
-                setCurrentPage(currentPage - 1)
-              }
-            >
-              <h2 className="px-2 border border-solid border-gray-200">
-                {currentPage - 1}
-              </h2>
-            </button>
-          ) : (
-            <></>
-          )}
-          <h2
-            className="bg-orange-500 text-white px-2 border border-solid border-gray-200"
-            id="page"
-          >
-            {currentPage}
-          </h2>
-          {currentPage + 1 <= totalPages ? (
-            <button
-              onClick={() =>
-                setCurrentPage(currentPage + 1)
-              }
-            >
-              <h2 className="px-2  border border-solid border-gray-200">
-                {currentPage + 1}
-              </h2>
-            </button>
-          ) : (
-            <></>
-          )}
-          {currentPage + 2 <= totalPages ? (
-            <button
-              onClick={() => setCurrentPage(totalPages)}
-            >
-              <h2 className="px-2  border border-solid border-gray-200">
-                {totalPages}
-              </h2>
-            </button>
-          ) : (
-            <></>
-          )}
-          <button
-            onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="border border-solid px-2 disabled:bg-gray-200"
-          >
-            {'>'}
-          </button>
-        </div>
+        <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages} />
       </div>
     </>
   );
