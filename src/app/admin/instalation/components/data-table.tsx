@@ -15,6 +15,9 @@ import Filters from './filters';
 export default function DataTable() {
   const [instalations, setInstalations] = useState([]);
   const { setIsLoading } = useLoading();
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+
   async function fetchData() {
     setIsLoading(true);
     try {
@@ -23,7 +26,7 @@ export default function DataTable() {
       );
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/productions?department_id=7`,
+        `${process.env.NEXT_PUBLIC_API_URL}/productions?department_id=7&size=5&page=${currentPage}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -33,6 +36,7 @@ export default function DataTable() {
       const responseData = await response.json();
       console.log(responseData);
       setInstalations(responseData.items);
+      setTotalPages(responseData.pages);
     } catch (error) {
       console.error('Error:', error);
       setInstalations([]);
@@ -66,7 +70,7 @@ export default function DataTable() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   return (
     <>
@@ -123,6 +127,74 @@ export default function DataTable() {
             })}
           </TableBody>
         </Table>
+        <div className="flex justify-center mt-9 mb-4 space-x-2 text-base">
+          <button
+            onClick={() => setCurrentPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="border border-solid px-2 disabled:bg-gray-200"
+          >
+            {'<'}
+          </button>
+          {currentPage > 2 ? (
+            <button onClick={() => setCurrentPage(1)}>
+              <h2 className="px-2  border border-solid border-gray-200">
+                1
+              </h2>
+            </button>
+          ) : (
+            <></>
+          )}
+          {currentPage > 1 ? (
+            <button
+              onClick={() =>
+                setCurrentPage(currentPage - 1)
+              }
+            >
+              <h2 className="px-2 border border-solid border-gray-200">
+                {currentPage - 1}
+              </h2>
+            </button>
+          ) : (
+            <></>
+          )}
+          <h2
+            className="bg-orange-500 text-white px-2 border border-solid border-gray-200"
+            id="page"
+          >
+            {currentPage}
+          </h2>
+          {currentPage + 1 <= totalPages ? (
+            <button
+              onClick={() =>
+                setCurrentPage(currentPage + 1)
+              }
+            >
+              <h2 className="px-2  border border-solid border-gray-200">
+                {currentPage + 1}
+              </h2>
+            </button>
+          ) : (
+            <></>
+          )}
+          {currentPage + 2 <= totalPages ? (
+            <button
+              onClick={() => setCurrentPage(totalPages)}
+            >
+              <h2 className="px-2  border border-solid border-gray-200">
+                {totalPages}
+              </h2>
+            </button>
+          ) : (
+            <></>
+          )}
+          <button
+            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="border border-solid px-2 disabled:bg-gray-200"
+          >
+            {'>'}
+          </button>
+        </div>
       </div>
     </>
   );
