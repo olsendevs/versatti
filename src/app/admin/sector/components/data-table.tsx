@@ -89,7 +89,7 @@ export default function DataTable() {
       <Header searchData={searchData} />
       <div
         className="rounded-lg border w-[98%]
-      border-blue-100 border-opacity-70 bg-white mt-9
+      border-blue-100 border-opacity-70 bg-white mt-4
       shadow-md "
       >
         <div className="flex align-center items-center p-4 ">

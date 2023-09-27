@@ -25,7 +25,7 @@ export function SearchFilter({searchData, placeholder}: CustomInputProps) {
           />
         </div>
         <Input
-          className="w-[35vw] rounded-tr-lg rounded-br-lg border border-orange-500 bg-white pl-4 text-xs"
+          className="w-[26vw] rounded-tr-lg rounded-br-lg border border-orange-500 bg-white pl-4 text-xs"
           type="text"
           placeholder={placeholder}
           value={terms}
