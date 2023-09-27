@@ -10,7 +10,7 @@ import { ReloadIcon } from '@radix-ui/react-icons';
 import OrderTableRow from './table-row';
 import { useEffect, useState } from 'react';
 import { useLoading } from '@/components/ui/is-loading';
-import Filters from './filters';
+import Header from './header';
 import { Pagination } from '@/components/ui/pagination';
 
 export default function DataTable() {
@@ -75,7 +75,7 @@ export default function DataTable() {
 
   return (
     <>
-      <Filters searchData={searchData} />
+      <Header searchData={searchData} />
       <div
         className="rounded-lg border w-[98%]
       border-blue-100 border-opacity-70 bg-white mt-9
