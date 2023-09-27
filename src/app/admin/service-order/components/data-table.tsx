@@ -44,7 +44,7 @@ export default function DataTable() {
     setIsLoading(false);
   }
 
-  async function serachData(terms: string) {
+  async function searchData(terms: string) {
     setIsLoading(true);
     try {
       const token = JSON.parse(
@@ -75,7 +75,7 @@ export default function DataTable() {
 
   return (
     <>
-      <Filters serachData={serachData} />
+      <Filters searchData={searchData} />
       <div
         className="rounded-lg border w-[98%]
       border-blue-100 border-opacity-70 bg-white mt-9
@@ -102,8 +102,8 @@ export default function DataTable() {
         <Table className="">
           <TableHeader className="bg-[#FAFBFF] border-y border-gray-300">
             <TableRow>
-              <TableHead className="">Número OS</TableHead>
-              <TableHead>Produto</TableHead>
+              <TableHead className="">Número</TableHead>
+              <TableHead>Descrição ordem de serviço</TableHead>
               <TableHead>Data instalação</TableHead>
               <TableHead className="">
                 Setores em execução

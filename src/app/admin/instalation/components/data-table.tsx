@@ -102,8 +102,8 @@ export default function DataTable() {
         <Table className="">
           <TableHeader className="bg-[#FAFBFF] border-y border-gray-300">
             <TableRow>
-              <TableHead className="">Número OS</TableHead>
-              <TableHead>Produto</TableHead>
+              <TableHead className="">Número</TableHead>
+              <TableHead>Descrição produto</TableHead>
               <TableHead>Data instalação</TableHead>
               <TableHead>Tempo instalação</TableHead>
               <TableHead>Local</TableHead>
