@@ -1,5 +1,5 @@
 import { Input } from '@/components/ui/input';
-import { ClipboardIcon } from '@radix-ui/react-icons';
+import Image from 'next/image';
 
 export default function Order({
   orderData,
@@ -8,11 +8,13 @@ export default function Order({
   return (
     <div className="bg-white max-w-[98%] p-4 rad rounded-xl">
       <div className="flex align-center items-center pb-2">
-        <ClipboardIcon
-          className="mr-1 h-4 w-4 text-[#FF8800]"
-          onClick={() => {}}
-        />
-        <h6 className="text-sm font-bold">Pedido</h6>
+        <Image
+            src="/titulo-icone.png"
+            alt="icon"
+            width={18}
+            height={18}
+          />
+        <h6 className="text-sm font-bold ml-2">Pedido</h6>
       </div>
       <div className="flex items-center space-x-2 w-full">
         <Input

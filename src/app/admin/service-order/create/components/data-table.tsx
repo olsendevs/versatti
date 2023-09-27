@@ -5,7 +5,7 @@ import {
   TableHead,
   TableBody,
 } from '@/components/ui/table';
-import { ClipboardIcon } from '@radix-ui/react-icons';
+import Image from 'next/image';
 import ProductsRow from './table-row';
 
 export default function DataTable({
@@ -30,11 +30,13 @@ export default function DataTable({
       shadow-md "
     >
       <div className="flex align-center items-center p-4 ">
-        <ClipboardIcon
-          className="mr-1 h-4 w-4 text-[#FF8800]"
-          onClick={() => {}}
+        <Image
+          src="/titulo-icone.png"
+          alt="icon"
+          width={18}
+          height={18}
         />
-        <h6 className="text-sm font-bold">Produtos</h6>
+        <h6 className="text-sm font-bold ml-2">Produtos</h6>
       </div>
       <Table className="">
         <TableHeader className="bg-[#FAFBFF] border-y border-gray-300">
@@ -43,9 +45,7 @@ export default function DataTable({
             <TableHead>Produto</TableHead>
             <TableHead>Altura</TableHead>
             <TableHead>Largura</TableHead>
-            <TableHead className="text-white">
-              {`actions`}
-            </TableHead>
+            <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
