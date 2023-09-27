@@ -20,8 +20,8 @@ export default function Filters({ searchData }: any) {
           />
         </div>
         <Input
-          className="w-[300px] rounded-lg border border-blue-100 
-        bg-white shadow-md pl-4 text-xs"
+          className="w-[35vw] rounded-lg border border-blue-100 
+    bg-white shadow-md pl-4 text-xs"
           type="text"
           placeholder="Buscar instalação..."
           value={terms}
@@ -33,7 +33,7 @@ export default function Filters({ searchData }: any) {
           passHref
         >
           <Button
-            className="bg-[#02AE13] w-full font-thin p-1 hover:bg-green-600"
+            className="bg-[#02AE13] w-[100px] font-thin p-1 hover:bg-green-600"
             type="submit"
           >
             Criar ordem
