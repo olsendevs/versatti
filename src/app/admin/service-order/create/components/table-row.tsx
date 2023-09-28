@@ -65,7 +65,7 @@ export default function ProductsRow({
     <>
       {productRows.map((row) => (
         <TableRow key={row.id} className="">
-          <TableCell className="p-0">
+          <TableCell className="p-0 w-[10%]">
             {' '}
             <Input
               className=""
@@ -81,7 +81,7 @@ export default function ProductsRow({
               }
             />
           </TableCell>
-          <TableCell className="p-0">
+          <TableCell className="p-0 w-[40%]">
             <Select
               name={`product_${row.id}`}
               onValueChange={(e) =>

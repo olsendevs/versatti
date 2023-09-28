@@ -1,10 +1,11 @@
 import { Input } from '@/components/ui/input';
-import Image from 'next/image';
+import Image from 'next/image'
 
 export default function Order({
   orderData,
   setOrderData,
 }: any) {
+   console.log(orderData)
   return (
     <div className="bg-white max-w-[98%] p-4 rad rounded-xl">
       <div className="flex align-center items-center pb-2">
@@ -30,11 +31,13 @@ export default function Order({
             })
           }
         />
-
+        
         <Input
           className="rounded-lg border border-blue-100 
             bg-white shadow-md w-[50%] py-2"
-          type="date"
+          type="text"
+          onFocus={(e) => e.target.type = 'date'}
+          onBlur={(e) => e.target.type = 'text'}
           placeholder="Prazo"
           value={orderData.deadline_date}
           onChange={(e) =>
@@ -75,8 +78,10 @@ export default function Order({
         <Input
           className="rounded-lg border border-blue-100 
             bg-white shadow-md w-[90%] py-2"
-          type="date"
+          type="text"
           placeholder="Data instalação"
+          onFocus={(e) => e.target.type = 'date'}
+          onBlur={(e) => e.target.type = 'text'}
           value={orderData.installation_date}
           onChange={(e) =>
             setOrderData({
