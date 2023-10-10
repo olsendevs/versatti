@@ -41,10 +41,15 @@ export default function DataTable({
       <Table className="">
         <TableHeader className="bg-[#FAFBFF] border-y border-gray-300">
           <TableRow>
-            <TableHead>Quantidade</TableHead>
+            <TableHead>Qtd</TableHead>
+            <TableHead>Ambiente</TableHead>
             <TableHead>Produto</TableHead>
+            <TableHead>Material</TableHead>
             <TableHead>Altura</TableHead>
             <TableHead>Largura</TableHead>
+            <TableHead>m2</TableHead>
+            <TableHead>Desconto%</TableHead>
+            <TableHead>Preço</TableHead>
             <TableHead></TableHead>
           </TableRow>
         </TableHeader>

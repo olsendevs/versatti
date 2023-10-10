@@ -1,17 +1,18 @@
 'use client';
 
 import * as React from 'react';
-import Order from './components/order';
 import DataTable from './components/data-table';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { Toaster } from '@/components/ui/toaster';
 import { useLoading } from '@/components/ui/is-loading';
+import Budget from './components/budget';
+import Payment from './components/payment';
 
 export default function CreateServiceOrderPage() {
   const [formData, setFormData] = React.useState({});
-  const [orderData, setOrderData] = React.useState({});
+  const [budgetData, setBudgetData] = React.useState({});
   const { setIsLoading } = useLoading();
   const router = useRouter();
   const handleSubmit = async () => {
@@ -29,7 +30,7 @@ export default function CreateServiceOrderPage() {
         });
       products.push({ ...product, materials: [] });
     }
-    const data = { ...orderData, products: products };
+    const data = { ...budgetData, products: products };
 
     try {
       const token = JSON.parse(
@@ -72,19 +73,59 @@ export default function CreateServiceOrderPage() {
   };
   return (
     <div className="">
-      <Order
-        orderData={orderData}
-        setOrderData={setOrderData}
-      />
+      <div className="grid grid-cols-2 gap-4 w-[98%]">
+        <Budget
+          budgetData={budgetData}
+          setBudgetData={setBudgetData}
+        />
+        <Payment
+          paymentData={budgetData}
+          setPaymentData={setBudgetData}
+        />
+      </div>
       <DataTable
         formData={formData}
         setFormData={setFormData}
       />
-      <div className="w-[98%] flex">
+      <div className="w-[50%] ml-auto mr-9 flex">
         <Button
-          className="bg-[#02AE13] ml-auto font-extralight p-2 px-6 my-6 
-        hover:bg-green-600"
           type="submit"
+          variant={'outline'}
+          onClick={handleSubmit}
+        >
+          Arquivos
+        </Button>
+        <Button
+          type="submit"
+          variant={'outline'}
+          onClick={handleSubmit}
+        >
+          Solicitar Arte
+        </Button>
+        <Button
+          type="submit"
+          variant={'outline'}
+          onClick={handleSubmit}
+        >
+          Converter pedido
+        </Button>
+        <Button
+          type="submit"
+          variant={'outline'}
+          onClick={handleSubmit}
+        >
+          Emitir Orçamento
+        </Button>
+        <Button
+          type="submit"
+          variant={'outline'}
+          onClick={handleSubmit}
+        >
+          Adicionar Opção
+        </Button>
+        <Button
+          type="submit"
+          variant={'confirm'}
           onClick={handleSubmit}
         >
           Criar ordem

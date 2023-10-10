@@ -81,7 +81,31 @@ export default function ProductsRow({
               }
             />
           </TableCell>
-          <TableCell className="p-0 w-[40%]">
+          <TableCell className="p-0 w-[10%]">
+            <Select
+              name={`product_${row.id}`}
+              onValueChange={(e) =>
+                handleInputChange(`product_id`, e, row.id)
+              }
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Selecione" />
+              </SelectTrigger>
+              <SelectContent>
+                {products.map((product: any) => {
+                  return (
+                    <SelectItem
+                      key={product.product_id}
+                      value={product.product_id}
+                    >
+                      {product.product_description}
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
+          </TableCell>
+          <TableCell className="p-0 w-[20%]">
             <Select
               name={`product_${row.id}`}
               onValueChange={(e) =>
@@ -109,8 +133,8 @@ export default function ProductsRow({
             {' '}
             <Input
               className=""
-              type="number"
-              placeholder="Ex: 100"
+              type="text"
+              placeholder="Ex: Não definido"
               name={`height_${row.id}`}
               onChange={(e) =>
                 handleInputChange(
@@ -126,6 +150,22 @@ export default function ProductsRow({
             <Input
               className=""
               type="number"
+              placeholder="Ex: 100"
+              name={`height_${row.id}`}
+              onChange={(e) =>
+                handleInputChange(
+                  `height`,
+                  e.target.value,
+                  row.id,
+                )
+              }
+            />
+          </TableCell>
+
+          <TableCell className="p-0">
+            <Input
+              className=""
+              type="number"
               placeholder="Ex: 200"
               name={`width_${row.id}`}
               onChange={(e) =>
@@ -137,7 +177,53 @@ export default function ProductsRow({
               }
             />
           </TableCell>
-          <TableCell className="p-0 border">
+          <TableCell className="p-0">
+            <Input
+              className=""
+              type="number"
+              placeholder="Ex: m2"
+              name={`height_${row.id}`}
+              onChange={(e) =>
+                handleInputChange(
+                  `height`,
+                  e.target.value,
+                  row.id,
+                )
+              }
+            />
+          </TableCell>
+          <TableCell className="p-0 ">
+            <Input
+              className=""
+              type="number"
+              placeholder="Ex: 10"
+              name={`height_${row.id}`}
+              onChange={(e) =>
+                handleInputChange(
+                  `height`,
+                  e.target.value,
+                  row.id,
+                )
+              }
+            />
+          </TableCell>
+          <TableCell className="p-0">
+            {' '}
+            <Input
+              className=""
+              type="number"
+              placeholder="Ex: 1000,00"
+              name={`height_${row.id}`}
+              onChange={(e) =>
+                handleInputChange(
+                  `height`,
+                  e.target.value,
+                  row.id,
+                )
+              }
+            />
+          </TableCell>
+          <TableCell className="p-0 border w-[5%]">
             <div className="flex space-x-2 ml-4 ">
               <Image
                 src="/adicionar-icone.png"

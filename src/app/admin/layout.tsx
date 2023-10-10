@@ -24,6 +24,7 @@ import Link from 'next/link';
 import { useLogout } from '../../hooks/auth/useLogout';
 import { useLoading } from '@/components/ui/is-loading';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
+import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 
 const drawerWidth: number = 240;
 
@@ -106,7 +107,7 @@ export default function RootLayout({
         <Toolbar
           sx={{
             pr: '24px',
-            backgroundColor: 'white'
+            backgroundColor: 'white',
           }}
         >
           <IconButton
@@ -119,7 +120,7 @@ export default function RootLayout({
               ...(open && { display: 'none' }),
             }}
           >
-            <MenuIcon color='action' />
+            <MenuIcon color="action" />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -167,6 +168,14 @@ export default function RootLayout({
                 alt="ordem de serviço icon"
               />
               <ListItemText primary="Ordem de serviço" />
+            </ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                router.push('/admin/service-order');
+              }}
+            >
+              <RequestQuoteIcon className="mr-8" />
+              <ListItemText primary="Orçamento" />
             </ListItemButton>
             <ListItemButton
               onClick={() => {
