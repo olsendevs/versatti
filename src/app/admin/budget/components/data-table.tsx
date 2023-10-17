@@ -26,7 +26,7 @@ export default function DataTable() {
       );
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/service_orders?size=5&page=${currentPage}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/quotes?size=5&page=${currentPage}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -9,6 +9,8 @@ import { Toaster } from '@/components/ui/toaster';
 import { useLoading } from '@/components/ui/is-loading';
 import Budget from './components/budget';
 import Payment from './components/payment';
+import { VersattiModal } from '@/components/admin/versatti-modal';
+import Modais from './components/modais';
 
 export default function CreateServiceOrderPage() {
   const [formData, setFormData] = React.useState({});
@@ -71,8 +73,11 @@ export default function CreateServiceOrderPage() {
     }
     setIsLoading(false);
   };
+
+  const addProductOption = () => {};
   return (
     <div className="">
+      <Modais />
       <div className="grid grid-cols-2 gap-4 w-[98%]">
         <Budget
           budgetData={budgetData}
@@ -91,21 +96,27 @@ export default function CreateServiceOrderPage() {
         <Button
           type="submit"
           variant={'outline'}
-          onClick={handleSubmit}
+          onClick={() => {
+            document.getElementById('arquivos')?.click();
+          }}
         >
           Arquivos
         </Button>
         <Button
           type="submit"
           variant={'outline'}
-          onClick={handleSubmit}
+          onClick={() => {
+            document.getElementById('cliente')?.click();
+          }}
         >
           Solicitar Arte
         </Button>
         <Button
           type="submit"
           variant={'outline'}
-          onClick={handleSubmit}
+          onClick={() => {
+            document.getElementById('materiais')?.click();
+          }}
         >
           Converter pedido
         </Button>
@@ -119,7 +130,7 @@ export default function CreateServiceOrderPage() {
         <Button
           type="submit"
           variant={'outline'}
-          onClick={handleSubmit}
+          onClick={addProductOption}
         >
           Adicionar Opção
         </Button>

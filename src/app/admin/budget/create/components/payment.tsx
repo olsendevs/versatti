@@ -1,3 +1,4 @@
+import VersattiSelect from '@/components/admin/versatti-select';
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
 
@@ -20,48 +21,46 @@ export default function Payment({
         </h6>
       </div>
       <div className="flex items-center space-x-2 w-full">
-        <Input
-          className="rounded-lg border border-blue-100 
-            bg-white shadow-md w-[70%] py-2"
-          type="text"
+        <VersattiSelect
           placeholder="Condição"
-          value={paymentData.order_description}
-          onChange={(e) =>
+          options={['1', '2']}
+          handleOnChange={(e: any) => {
             setPaymentData({
               ...paymentData,
-              order_description: e.target.value,
-            })
-          }
-        />
-        <Input
+              order_description: e,
+            });
+          }}
+          name={'condicao'}
           className="rounded-lg border border-blue-100 
-            bg-white shadow-md w-[50%] py-2"
-          type="text"
+          bg-white shadow-md w-[50%] py-2 text-gray-500"
+        />
+        <VersattiSelect
           placeholder="Sinal"
-          value={paymentData.order_description}
-          onChange={(e) =>
+          options={['1', '2']}
+          handleOnChange={(e: any) => {
             setPaymentData({
               ...paymentData,
-              order_description: e.target.value,
-            })
-          }
+              signal: e,
+            });
+          }}
+          name={'sinal'}
+          className="rounded-lg border border-blue-100 
+          bg-white shadow-md w-[50%] py-2 text-gray-500"
         />
       </div>
       <div className="flex items-center space-x-2 w-full mt-4">
-        <Input
-          className="rounded-lg border border-blue-100 
-            bg-white shadow-md w-[70%] py-2"
-          type="text"
-          onFocus={(e) => (e.target.type = 'date')}
-          onBlur={(e) => (e.target.type = 'text')}
+        <VersattiSelect
           placeholder="Método"
-          value={paymentData.deadline_date}
-          onChange={(e) =>
+          options={['1', '2']}
+          handleOnChange={(e: any) => {
             setPaymentData({
               ...paymentData,
-              deadline_date: e.target.value,
-            })
-          }
+              deadline_date: e,
+            });
+          }}
+          name={'metodo'}
+          className="rounded-lg border border-blue-100 
+            bg-white shadow-md w-[70%] py-2 text-gray-500"
         />
         <Input
           className="rounded-lg border border-blue-100 

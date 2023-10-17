@@ -171,7 +171,7 @@ export default function RootLayout({
             </ListItemButton>
             <ListItemButton
               onClick={() => {
-                router.push('/admin/service-order');
+                router.push('/admin/budget');
               }}
             >
               <RequestQuoteIcon className="mr-8" />

@@ -1,5 +1,6 @@
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
+import CustomerSelect from './customer-select';
 
 export default function Budget({
   budgetData,
@@ -35,20 +36,15 @@ export default function Budget({
         />
       </div>
       <div className="flex items-center space-x-2 w-full mt-4">
-        <Input
+        <CustomerSelect
+          placeholder="Clientes"
+          options={['1', '2', '5']}
+          handleOnChange={(e: any) => {
+            console.log(e);
+          }}
+          name={'clientes'}
           className="rounded-lg border border-blue-100 
-            bg-white shadow-md w-[90%] py-2"
-          type="text"
-          onFocus={(e) => (e.target.type = 'date')}
-          onBlur={(e) => (e.target.type = 'text')}
-          placeholder="Cliente"
-          value={budgetData.deadline_date}
-          onChange={(e) =>
-            setBudgetData({
-              ...budgetData,
-              deadline_date: e.target.value,
-            })
-          }
+            bg-white shadow-md w-[90%] py-2 text-gray-500"
         />
         <Input
           className="rounded-lg border border-blue-100 
