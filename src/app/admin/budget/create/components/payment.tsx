@@ -23,11 +23,22 @@ export default function Payment({
       <div className="flex items-center space-x-2 w-full">
         <VersattiSelect
           placeholder="Condição"
-          options={['1', '2']}
+          options={[
+            '1x',
+            '2x',
+            '3x',
+            '4x',
+            '5x',
+            '6x',
+            '7x',
+            '8x',
+            '9x',
+            '10x',
+          ]}
           handleOnChange={(e: any) => {
             setPaymentData({
               ...paymentData,
-              order_description: e,
+              condition: e,
             });
           }}
           name={'condicao'}
@@ -36,7 +47,7 @@ export default function Payment({
         />
         <VersattiSelect
           placeholder="Sinal"
-          options={['1', '2']}
+          options={['Entrega', 'Pedido']}
           handleOnChange={(e: any) => {
             setPaymentData({
               ...paymentData,
@@ -51,7 +62,13 @@ export default function Payment({
       <div className="flex items-center space-x-2 w-full mt-4">
         <VersattiSelect
           placeholder="Método"
-          options={['1', '2']}
+          options={[
+            'BOLETO',
+            'CARTÃO DE CRÉDITO',
+            'CARTÃO DE DEBITO',
+            'PIX',
+            'TRANSFERÊNCIA',
+          ]}
           handleOnChange={(e: any) => {
             setPaymentData({
               ...paymentData,

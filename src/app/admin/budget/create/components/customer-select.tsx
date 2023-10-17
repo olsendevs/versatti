@@ -17,32 +17,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-
-const frameworks = [
-  {
-    value: 'joao vitor',
-    label: 'Joao Vitor',
-  },
-  {
-    value: 'helder',
-    label: 'Helder',
-  },
-  {
-    value: 'marcos',
-    label: 'Marcos',
-  },
-  {
-    value: 'aurelio',
-    label: 'Aurelio',
-  },
-  {
-    value: 'fabio',
-    label: 'Fabio',
-  },
-];
+import Image from 'next/image';
 
 export default function CustomerSelect({
   placeholder,
+  options,
 }: any) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
@@ -57,21 +36,35 @@ export default function CustomerSelect({
           className="w-full justify-between"
         >
           {value
-            ? frameworks.find(
-                (framework) => framework.value === value,
-              )?.label
+            ? options
+                .map((e: any) => e.toLowerCase())
+                .find((option: any) => option == value)
             : placeholder}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <ChevronsUpDown className="mr-6 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
+      <div>
+        <Image
+          src="/adicionar-icone.png"
+          alt="icon"
+          className="absolute ml-[-40px] mt-[-10px] cursor-pointer"
+          width={20}
+          height={20}
+          onClick={() => {
+            document.getElementById('cliente')?.click();
+          }}
+        />
+      </div>
       <PopoverContent className="w-[30vw] p-0">
         <Command>
           <CommandInput placeholder="Pesquise pelo cliente..." />
-          <CommandEmpty>No framework found.</CommandEmpty>
+          <CommandEmpty>
+            Nenhum cliente encontrado.
+          </CommandEmpty>
           <CommandGroup>
-            {frameworks.map((framework) => (
+            {options.map((option: any) => (
               <CommandItem
-                key={framework.value}
+                key={option}
                 onSelect={(currentValue: any) => {
                   setValue(
                     currentValue === value
@@ -84,12 +77,12 @@ export default function CustomerSelect({
                 <Check
                   className={cn(
                     'mr-2 h-4 w-4',
-                    value === framework.value
+                    value === option
                       ? 'opacity-100'
                       : 'opacity-0',
                   )}
                 />
-                {framework.label}
+                {option}
               </CommandItem>
             ))}
           </CommandGroup>

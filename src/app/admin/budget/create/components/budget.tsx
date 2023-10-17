@@ -1,11 +1,44 @@
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
 import CustomerSelect from './customer-select';
+import { useEffect, useState } from 'react';
 
 export default function Budget({
   budgetData,
   setBudgetData,
 }: any) {
+  const [clients, setCliens] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    try {
+      const token = JSON.parse(
+        localStorage.getItem('token') || '',
+      );
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/clients?fields=["client_name"]`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const responseData = await response.json();
+      console.log(responseData);
+      setCliens(
+        responseData.items.map((e: any) => e.client_name),
+      );
+      console.log(
+        responseData.items.map((e: any) => e.client_name),
+      );
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
   console.log(budgetData);
   return (
     <div className="bg-white max-w-[10000px] p-4 rad rounded-xl">
@@ -38,7 +71,7 @@ export default function Budget({
       <div className="flex items-center space-x-2 w-full mt-4">
         <CustomerSelect
           placeholder="Clientes"
-          options={['1', '2', '5']}
+          options={clients}
           handleOnChange={(e: any) => {
             console.log(e);
           }}

@@ -1,3 +1,4 @@
+import { Ball } from '@/components/admin/ball';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -12,12 +13,18 @@ import { useEffect, useState } from 'react';
 
 export default function ProductsRow({
   handleInputChange,
+  setMaterials,
+  materialsData,
 }: any) {
   const [productRows, setProductRows] = useState([
     { id: 1 },
   ]);
   const [products, setProducts] = useState([
-    { product_description: '', product_id: '' },
+    {
+      product_description: '',
+      product_id: '',
+      materials: [],
+    },
   ]);
 
   const addNewProduct = () => {
@@ -41,7 +48,7 @@ export default function ProductsRow({
       );
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/products/product_description`,
+        `${process.env.NEXT_PUBLIC_API_URL}/products?fields=["product_id", "product_description", "materials"]`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -50,7 +57,9 @@ export default function ProductsRow({
       );
       const responseData = await response.json();
 
-      setProducts(responseData);
+      if (responseData.items.length > 0) {
+        setProducts(responseData.items);
+      }
     } catch (error) {
       console.error('Error:', error);
       setProducts([]);
@@ -58,6 +67,7 @@ export default function ProductsRow({
   }
 
   useEffect(() => {
+    console.log(materialsData);
     fetchData();
   }, []);
 
@@ -81,36 +91,22 @@ export default function ProductsRow({
               }
             />
           </TableCell>
-          <TableCell className="p-0 w-[10%]">
-            <Select
-              name={`product_${row.id}`}
-              onValueChange={(e) =>
-                handleInputChange(`product_id`, e, row.id)
-              }
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Selecione" />
-              </SelectTrigger>
-              <SelectContent>
-                {products.map((product: any) => {
-                  return (
-                    <SelectItem
-                      key={product.product_id}
-                      value={product.product_id}
-                    >
-                      {product.product_description}
-                    </SelectItem>
-                  );
-                })}
-              </SelectContent>
-            </Select>
-          </TableCell>
           <TableCell className="p-0 w-[20%]">
             <Select
               name={`product_${row.id}`}
-              onValueChange={(e) =>
-                handleInputChange(`product_id`, e, row.id)
-              }
+              onValueChange={(e) => {
+                setMaterials(
+                  products.find((x) => x.product_id == e)
+                    ?.materials,
+                );
+
+                console.log(
+                  products.find((x) => x.product_id == e)
+                    ?.materials,
+                );
+
+                handleInputChange(`product_id`, e, row.id);
+              }}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione" />
@@ -129,21 +125,31 @@ export default function ProductsRow({
               </SelectContent>
             </Select>
           </TableCell>
-          <TableCell className="p-0">
-            {' '}
-            <Input
-              className=""
-              type="text"
-              placeholder="Ex: Não definido"
-              name={`height_${row.id}`}
-              onChange={(e) =>
-                handleInputChange(
-                  `height`,
-                  e.target.value,
-                  row.id,
-                )
-              }
-            />
+          <TableCell className="p-0 w-[8%]">
+            <div
+              className="flex items-center cursor-pointer"
+              onClick={() => {
+                document
+                  .getElementById('materiais')
+                  ?.click();
+              }}
+            >
+              {materialsData &&
+              materialsData.filter(
+                (e: any) => e.thickness != '',
+              ) ? (
+                <>
+                  <Ball color={'yellow'} />
+                  <div className="ml-2">Não definido</div>
+                </>
+              ) : (
+                <>
+                  {' '}
+                  <Ball color={'yellow'} />
+                  <div className="ml-2">Não definido</div>
+                </>
+              )}
+            </div>
           </TableCell>
           <TableCell className="p-0">
             {' '}

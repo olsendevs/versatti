@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import DataTable from './components/data-table';
+import Products from './components/products';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
@@ -9,18 +9,43 @@ import { Toaster } from '@/components/ui/toaster';
 import { useLoading } from '@/components/ui/is-loading';
 import Budget from './components/budget';
 import Payment from './components/payment';
-import { VersattiModal } from '@/components/admin/versatti-modal';
 import Modais from './components/modais';
+import Address from './components/address';
 
 export default function CreateServiceOrderPage() {
-  const [formData, setFormData] = React.useState({});
+  const [productsData, setProductsData] = React.useState(
+    {},
+  );
+  const [secondOptionData, setSecondOptionData] =
+    React.useState({});
+  const [hasProductOptions, setHasProductOptions] =
+    React.useState(false);
+
+  const [selectedProductOption, setSelectedProductOption] =
+    React.useState('');
+
   const [budgetData, setBudgetData] = React.useState({});
+
+  const [addressData, setAddressData] = React.useState({});
+
+  const [materials, setMaterials] = React.useState([]);
+
+  const [materialsData, setMaterialsData] = React.useState([
+    {
+      color: '',
+      material: '',
+      thickness: '',
+    },
+  ]);
+
   const { setIsLoading } = useLoading();
+
   const router = useRouter();
+
   const handleSubmit = async () => {
     setIsLoading(true);
     let products: Array<any> = [];
-    const productsKeys = Object.entries(formData);
+    const productsKeys = Object.entries(productsData);
     for (var x = 0; x < productsKeys.length / 4; x++) {
       const product: any = {};
       productsKeys
@@ -74,10 +99,18 @@ export default function CreateServiceOrderPage() {
     setIsLoading(false);
   };
 
-  const addProductOption = () => {};
+  const addProductOption = () => {
+    setHasProductOptions(true);
+    setSelectedProductOption('');
+  };
   return (
     <div className="">
-      <Modais />
+      <Modais
+        materials={materials}
+        materialsData={materialsData}
+        setMaterials={setMaterials}
+        setMaterialsData={setMaterialsData}
+      />
       <div className="grid grid-cols-2 gap-4 w-[98%]">
         <Budget
           budgetData={budgetData}
@@ -88,10 +121,41 @@ export default function CreateServiceOrderPage() {
           setPaymentData={setBudgetData}
         />
       </div>
-      <DataTable
-        formData={formData}
-        setFormData={setFormData}
+      <Address
+        addressData={addressData}
+        setAddressData={setAddressData}
       />
+      <Products
+        selectedProductOption={selectedProductOption}
+        setSelectedProductOption={setSelectedProductOption}
+        hasProductOptions={hasProductOptions}
+        setHasProductOptions={setHasProductOptions}
+        productsData={secondOptionData}
+        setFormData={setSecondOptionData}
+        option={'01'}
+        setMaterials={setMaterials}
+        setMaterialsData={setMaterialsData}
+        materialsData={materialsData}
+      />
+      {hasProductOptions ? (
+        <Products
+          selectedProductOption={selectedProductOption}
+          setSelectedProductOption={
+            setSelectedProductOption
+          }
+          setMaterials={setMaterials}
+          hasProductOptions={hasProductOptions}
+          setHasProductOptions={setHasProductOptions}
+          productsData={productsData}
+          setFormData={setProductsData}
+          setMaterialsData={setMaterialsData}
+          materialsData={materialsData}
+          option={'02'}
+        />
+      ) : (
+        <></>
+      )}
+
       <div className="w-[50%] ml-auto mr-9 flex">
         <Button
           type="submit"
@@ -105,18 +169,17 @@ export default function CreateServiceOrderPage() {
         <Button
           type="submit"
           variant={'outline'}
-          onClick={() => {
-            document.getElementById('cliente')?.click();
-          }}
+          onClick={() => {}}
         >
           Solicitar Arte
         </Button>
         <Button
           type="submit"
           variant={'outline'}
-          onClick={() => {
-            document.getElementById('materiais')?.click();
-          }}
+          onClick={() => {}}
+          disabled={
+            hasProductOptions && selectedProductOption == ''
+          }
         >
           Converter pedido
         </Button>
@@ -139,7 +202,7 @@ export default function CreateServiceOrderPage() {
           variant={'confirm'}
           onClick={handleSubmit}
         >
-          Criar ordem
+          Salvar
         </Button>
       </div>
       <Toaster />
