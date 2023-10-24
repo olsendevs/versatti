@@ -1,5 +1,5 @@
 import { VersattiModal } from '@/components/admin/versatti-modal';
-
+import Files from './files';
 import Clients from './clients';
 import Materials from './materials';
 import { useState } from 'react';
@@ -85,6 +85,14 @@ export default function Modais({
         modalDescription={''}
         modalButtonText={'Salvar'}
         modalButtonOnClick={() => handleClientsSubmit}
+      />
+      <VersattiModal
+        buttonId={'arquivos'}
+        modalContent={<Files />}
+        modalTitle={'Arquivos'}
+        modalDescription={''}
+        modalButtonText={'Upload'}
+        modalButtonOnClick={() => {}}
       />
     </div>
   );

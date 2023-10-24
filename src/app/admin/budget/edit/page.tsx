@@ -11,7 +11,6 @@ import Budget from './components/budget';
 import Payment from './components/payment';
 import Modais from './components/modais';
 import Address from './components/address';
-import Files from './components/files';
 
 export default function CreateServiceOrderPage() {
   const [productsData, setProductsData] = React.useState(
@@ -125,7 +124,6 @@ export default function CreateServiceOrderPage() {
         setMaterialsData={setMaterialsData}
         setSelectClients={setSelectClients}
       />
-      <Files />
       <div className="grid grid-cols-2 gap-4 w-[98%]">
         <Budget
           budgetData={budgetData}
@@ -194,6 +192,23 @@ export default function CreateServiceOrderPage() {
           onClick={() => {}}
         >
           Solicitar Arte
+        </Button>
+        <Button
+          type="submit"
+          variant={'outline'}
+          onClick={() => {}}
+          disabled={
+            hasProductOptions && selectedProductOption == ''
+          }
+        >
+          Converter pedido
+        </Button>
+        <Button
+          type="submit"
+          variant={'outline'}
+          onClick={handleSubmit}
+        >
+          Emitir Orçamento
         </Button>
         <Button
           type="submit"

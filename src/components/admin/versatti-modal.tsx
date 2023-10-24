@@ -8,8 +8,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import Image from 'next/image';
 
 export function VersattiModal({
@@ -52,7 +50,9 @@ export function VersattiModal({
           <Button
             variant="outline"
             type="submit"
-            onClick={modalButtonOnClick()}
+            onClick={() => {
+              modalButtonOnClick();
+            }}
           >
             {modalButtonText}
           </Button>

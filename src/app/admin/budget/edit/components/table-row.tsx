@@ -16,15 +16,18 @@ export default function ProductsRow({
   setMaterials,
   materialsDone,
   materialsData,
-  products,
-  setProducts,
 }: any) {
   const [productRows, setProductRows] = useState([
     { id: 1 },
   ]);
-  const [selectedProduct, setSelectedProduct] = useState(
-    {},
-  );
+
+  const [products, setProducts] = useState([
+    {
+      product_description: '',
+      product_id: '',
+      materials: [],
+    },
+  ]);
 
   const addNewProduct = () => {
     const newId = productRows.length + 1;
@@ -104,20 +107,16 @@ export default function ProductsRow({
               name={`product_${row.id}`}
               onValueChange={(e) => {
                 setMaterials(
-                  products.find(
-                    (x: any) => x.product_id == e,
-                  )?.materials,
+                  products.find((x) => x.product_id == e)
+                    ?.materials,
                 );
 
                 console.log(
-                  products.find(
-                    (x: any) => x.product_id == e,
-                  )?.materials,
+                  products.find((x) => x.product_id == e)
+                    ?.materials,
                 );
 
                 handleInputChange(`product_id`, e, row.id);
-
-                setSelectedProduct(e);
               }}
             >
               <SelectTrigger className="w-full">
@@ -201,10 +200,10 @@ export default function ProductsRow({
               className=""
               type="number"
               placeholder="Ex: m2"
-              name={`m2_${row.id}`}
+              name={`height_${row.id}`}
               onChange={(e) =>
                 handleInputChange(
-                  `m2`,
+                  `height`,
                   e.target.value,
                   row.id,
                 )
@@ -216,10 +215,10 @@ export default function ProductsRow({
               className=""
               type="number"
               placeholder="Ex: 10"
-              name={`discount_${row.id}`}
+              name={`height_${row.id}`}
               onChange={(e) =>
                 handleInputChange(
-                  `discount`,
+                  `height`,
                   e.target.value,
                   row.id,
                 )
@@ -232,23 +231,14 @@ export default function ProductsRow({
               className=""
               type="number"
               placeholder="Ex: 1000,00"
-              name={`price_${row.id}`}
-              onChange={(e) => {
+              name={`height_${row.id}`}
+              onChange={(e) =>
                 handleInputChange(
-                  `price`,
+                  `height`,
                   e.target.value,
                   row.id,
-                );
-                let updatedProduct = products;
-
-                const index = updatedProduct.findIndex(
-                  (x: any) =>
-                    x.product_id == selectedProduct,
-                );
-                updatedProduct[index].price =
-                  e.target.value;
-                setProducts(updatedProduct);
-              }}
+                )
+              }
             />
           </TableCell>
           <TableCell className="p-0 border w-[5%]">

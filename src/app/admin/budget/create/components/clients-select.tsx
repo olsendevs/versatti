@@ -19,12 +19,13 @@ import {
 } from '@/components/ui/popover';
 import Image from 'next/image';
 
-export default function CustomerSelect({
+export default function ClientsSelect({
   placeholder,
   options,
+  selectedClient,
+  setSelectedClient,
 }: any) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState('');
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -35,10 +36,12 @@ export default function CustomerSelect({
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {value
+          {selectedClient
             ? options
                 .map((e: any) => e.toLowerCase())
-                .find((option: any) => option == value)
+                .find(
+                  (option: any) => option == selectedClient,
+                )
             : placeholder}
           <ChevronsUpDown className="mr-6 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -66,8 +69,8 @@ export default function CustomerSelect({
               <CommandItem
                 key={option}
                 onSelect={(currentValue: any) => {
-                  setValue(
-                    currentValue === value
+                  setSelectedClient(
+                    currentValue === selectedClient
                       ? ''
                       : currentValue,
                   );
@@ -77,7 +80,7 @@ export default function CustomerSelect({
                 <Check
                   className={cn(
                     'mr-2 h-4 w-4',
-                    value === option
+                    selectedClient === option
                       ? 'opacity-100'
                       : 'opacity-0',
                   )}

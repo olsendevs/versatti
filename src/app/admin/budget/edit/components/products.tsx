@@ -9,7 +9,6 @@ import Image from 'next/image';
 import ProductsRow from './table-row';
 import { TrashIcon } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useState } from 'react';
 
 export default function Products({
   hasProductOptions,
@@ -34,17 +33,8 @@ export default function Products({
       ...formData,
       [fieldName + '-' + id]: value,
     });
-    console.log(formData);
   };
 
-  const [products, setProducts] = useState([
-    {
-      product_description: '',
-      product_id: '',
-      price: 0,
-      materials: [],
-    },
-  ]);
   return (
     <div
       className="rounded-lg border w-[98%]
@@ -110,8 +100,6 @@ export default function Products({
         </TableHeader>
         <TableBody>
           <ProductsRow
-            products={products}
-            setProducts={setProducts}
             setMaterials={setMaterials}
             materialsData={materialsData}
             setMaterialsData={setMaterialsData}
@@ -121,22 +109,6 @@ export default function Products({
           />
         </TableBody>
       </Table>
-      <div className="p-2 text-black  bg-gray-200 text-sm">
-        <div className="flex items-center">
-          <div className="ml-auto flex">
-            Valor total{' '}
-            <div className="pl-4 pr-4 ml-4 border-black border bg-white">
-              {products.reduce(
-                (sum: any, e: any) =>
-                  e.price != ''
-                    ? sum + Number(e.price)
-                    : sum,
-                0,
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
