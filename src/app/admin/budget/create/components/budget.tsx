@@ -1,20 +1,33 @@
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ClientsSelect from './clients-select';
 import { getClients } from '@/api';
+import Clients from './clients';
 
 export default function Budget({
-  selectClients,
-  setSelectClients,
-  budgetData,
-  setBudgetData,
-  selectedClient,
-  setSelectedClient,
+  quoteData,
+  setQuoteData,
 }: any) {
+  const [selectedClient, setSelectedClient] =
+    React.useState<any>();
+
+  const [selectClients, setSelectClients] = React.useState(
+    [],
+  );
   useEffect(() => {
     getClients(setSelectClients);
   }, []);
+
+  useEffect(() => {
+    const newQuote = quoteData;
+    if (selectedClient) {
+      newQuote.client_id = selectedClient.client_id;
+      newQuote.client_name = selectedClient.client_name;
+
+      setQuoteData(newQuote);
+    }
+  }, [selectedClient]);
 
   return (
     <div className="bg-white max-w-[10000px] p-4 rad rounded-xl">
@@ -35,11 +48,11 @@ export default function Budget({
             bg-white shadow-md w-full py-2"
           type="text"
           placeholder="Observação"
-          value={budgetData.order_description}
+          value={quoteData?.additional_information || ''}
           onChange={(e) =>
-            setBudgetData({
-              ...budgetData,
-              order_description: e.target.value,
+            setQuoteData({
+              ...quoteData,
+              additional_information: e.target.value,
             })
           }
         />
@@ -50,23 +63,23 @@ export default function Budget({
           options={selectClients}
           selectedClient={selectedClient}
           setSelectedClient={setSelectedClient}
-          handleOnChange={(e: any) => {
-            console.log(e);
-          }}
           name={'clientes'}
           className="rounded-lg border border-blue-100 
             bg-white shadow-md w-[90%] py-2 text-gray-500"
         />
+        <Clients setSelectClients={setSelectClients} />
         <Input
           className="rounded-lg border border-blue-100 
             bg-white shadow-md w-[30%] py-2"
           type="text"
           placeholder="Prazo"
-          value={budgetData.endDate}
+          onFocus={(e) => (e.target.type = 'date')}
+          onBlur={(e) => (e.target.type = 'text')}
+          value={quoteData.deadline}
           onChange={(e) =>
-            setBudgetData({
-              ...budgetData,
-              client_id: e.target.value,
+            setQuoteData({
+              ...quoteData,
+              deadline: e.target.value,
             })
           }
         />

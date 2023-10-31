@@ -1,12 +1,31 @@
 import VersattiSelect from '@/components/admin/versatti-select';
 import { Input } from '@/components/ui/input';
+import { PaymentType } from '@/types/budget';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 export default function Payment({
-  paymentData,
-  setPaymentData,
+  quoteData,
+  setQuoteData,
 }: any) {
-  console.log(paymentData);
+  const [paymentData, setPaymentData] =
+    useState<PaymentType>({
+      payment_method: '',
+      incoming_percentage: undefined,
+      installments: undefined,
+      payment_incoming: '',
+    });
+
+  useEffect(() => {
+    const newBudget = quoteData;
+
+    if (newBudget) {
+      newBudget.payment = paymentData;
+      console.log(newBudget);
+      setQuoteData(newBudget);
+    }
+  }, [paymentData]);
+
   return (
     <div className="bg-white max-w-[100%] p-4 rad rounded-xl">
       <div className="flex align-center items-center pb-2">
@@ -36,9 +55,10 @@ export default function Payment({
             '10x',
           ]}
           handleOnChange={(e: any) => {
+            console.log(e.split('x')[0]);
             setPaymentData({
               ...paymentData,
-              condition: e,
+              installments: Number(e.split('x')[0]),
             });
           }}
           name={'condicao'}
@@ -51,7 +71,7 @@ export default function Payment({
           handleOnChange={(e: any) => {
             setPaymentData({
               ...paymentData,
-              signal: e,
+              payment_incoming: e,
             });
           }}
           name={'sinal'}
@@ -72,7 +92,7 @@ export default function Payment({
           handleOnChange={(e: any) => {
             setPaymentData({
               ...paymentData,
-              deadline_date: e,
+              payment_method: e,
             });
           }}
           name={'metodo'}
@@ -82,13 +102,13 @@ export default function Payment({
         <Input
           className="rounded-lg border border-blue-100 
             bg-white shadow-md w-[50%] py-2"
-          type="text"
+          type="number"
           placeholder="Percentual sinal"
-          value={paymentData.endDate}
+          value={paymentData.incoming_percentage}
           onChange={(e) =>
             setPaymentData({
               ...paymentData,
-              client_id: e.target.value,
+              incoming_percentage: Number(e.target.value),
             })
           }
         />

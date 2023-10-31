@@ -5,30 +5,61 @@ import {
   RadioGroup,
   RadioGroupItem,
 } from '@/components/ui/radio-group';
+import { AddressType } from '@/types/budget';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 export default function Address({
-  addressData,
-  setAddressData,
-  selectedClient,
+  quoteData,
+  setQuoteData,
 }: any) {
+  const [addressData, setAddressData] =
+    useState<AddressType>({
+      cep: '',
+      address_name: '',
+      address_number: undefined,
+      city: '',
+      complement: '',
+      neighborhood: '',
+      state: '',
+    });
   const [addressType, setAddressType] =
     useState('take-store');
   const [clientAddress, setClientsAddress] = useState([]);
-
   useEffect(() => {
-    if (addressType == 'same-address')
+    const newBudget = quoteData;
+
+    if (newBudget) {
+      newBudget.address = addressData;
+
+      setQuoteData(newBudget);
+    }
+  }, [addressData]);
+  useEffect(() => {
+    if (addressType == 'same-address') {
       if (clientAddress.length == 0) {
         getClientsAddress(setClientsAddress);
       } else {
         const client: any = clientAddress.find(
-          (e: any) => e.client_name == selectedClient,
+          (e: any) => e.client_id == quoteData.client_id,
         );
-
-        setAddressData(client.address);
+        if (client) setAddressData(client.address);
       }
-  }, [addressType, clientAddress, selectedClient]);
+    }
+
+    if (addressType == 'new-address') {
+      setAddressData({
+        cep: '',
+        address_name: '',
+        address_number: undefined,
+        city: '',
+        complement: '',
+        neighborhood: '',
+        state: '',
+      });
+    }
+  }, [addressType, clientAddress, quoteData]);
+
   return (
     <div className="bg-white max-w-[98%] p-4 mt-4 mb-9 rad rounded-xl">
       <div className="flex align-center items-center pb-2">
@@ -97,7 +128,7 @@ export default function Address({
                 neighborhood: addressData.neighborhood,
                 complement: addressData.complement,
                 address_name: addressData.address_name,
-                address_number: addressData.addres_number,
+                address_number: addressData.address_number,
               });
             }}
           />
@@ -115,7 +146,7 @@ export default function Address({
                 neighborhood: addressData.neighborhood,
                 complement: addressData.complement,
                 address_name: addressData.address_name,
-                address_number: addressData.addres_number,
+                address_number: addressData.address_number,
               });
             }}
           />
@@ -133,7 +164,7 @@ export default function Address({
                 neighborhood: addressData.neighborhood,
                 complement: addressData.complement,
                 address_name: addressData.address_name,
-                address_number: addressData.addres_number,
+                address_number: addressData.address_number,
               });
             }}
           />
@@ -151,7 +182,7 @@ export default function Address({
                 neighborhood: addressData.neighborhood,
                 complement: addressData.complement,
                 address_name: e.target.value,
-                address_number: addressData.addres_number,
+                address_number: addressData.address_number,
               });
             }}
           />
@@ -169,14 +200,14 @@ export default function Address({
                 neighborhood: e.target.value,
                 complement: addressData.complement,
                 address_name: addressData.address_name,
-                address_number: addressData.addres_number,
+                address_number: addressData.address_number,
               });
             }}
           />
           <Input
             className="rounded-lg border border-blue-100 
             bg-white shadow-md w-full py-2"
-            type="text"
+            type="number"
             placeholder="Numero"
             value={addressData.address_number}
             onChange={(e) => {
@@ -187,7 +218,7 @@ export default function Address({
                 neighborhood: addressData.neighborhood,
                 complement: addressData.complement,
                 address_name: addressData.address_name,
-                address_number: e.target.value,
+                address_number: Number(e.target.value),
               });
             }}
           />
@@ -205,7 +236,7 @@ export default function Address({
                 neighborhood: addressData.neighborhood,
                 complement: e.target.value,
                 address_name: addressData.address_name,
-                address_number: addressData.addres_number,
+                address_number: addressData.address_number,
               });
             }}
           />

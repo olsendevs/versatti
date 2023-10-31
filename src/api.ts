@@ -124,7 +124,7 @@ export const getClients = async (setSelectClients: any) => {
     );
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/clients?fields=["client_name"]`,
+      `${process.env.NEXT_PUBLIC_API_URL}/clients?fields=["client_name","client_id"]`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -133,9 +133,7 @@ export const getClients = async (setSelectClients: any) => {
     );
     const responseData = await response.json();
     console.log(responseData);
-    setSelectClients(
-      responseData.items.map((e: any) => e.client_name),
-    );
+    setSelectClients(responseData.items);
     console.log(
       responseData.items.map((e: any) => e.client_name),
     );
@@ -153,7 +151,7 @@ export const getClientsAddress = async (
     );
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/clients?fields=["client_name", "address"]`,
+      `${process.env.NEXT_PUBLIC_API_URL}/clients?fields=["client_id", "address"]`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

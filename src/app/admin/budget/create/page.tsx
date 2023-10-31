@@ -1,204 +1,107 @@
 'use client';
-
 import * as React from 'react';
 import Products from './components/products';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
-import { useRouter } from 'next/navigation';
 import { Toaster } from '@/components/ui/toaster';
-import { useLoading } from '@/components/ui/is-loading';
 import Budget from './components/budget';
 import Payment from './components/payment';
-import Modais from './components/modais';
 import Address from './components/address';
 import Files from './components/files';
+import { BudgetType } from '@/types/budget';
 
 export default function CreateServiceOrderPage() {
-  const [productsData, setProductsData] = React.useState(
-    {},
-  );
-  const [secondOptionData, setSecondOptionData] =
-    React.useState({});
-  const [hasProductOptions, setHasProductOptions] =
-    React.useState(false);
-
-  const [selectedProductOption, setSelectedProductOption] =
-    React.useState('');
-
-  const [selectClients, setSelectClients] = React.useState(
-    [],
-  );
-
-  const [budgetData, setBudgetData] = React.useState({});
-
-  const [addressData, setAddressData] = React.useState({});
-
-  const [materials, setMaterials] = React.useState([]);
-
-  const [materialsDone, setMaterialsDone] = React.useState(
-    [],
-  );
-
-  const [materialsData, setMaterialsData] = React.useState([
-    {
-      color: '',
-      material: '',
-      thickness: '',
-    },
-  ]);
-  const [selectedClient, setSelectedClient] =
-    React.useState('');
-
-  const { setIsLoading } = useLoading();
-
-  const router = useRouter();
-
-  const handleSubmit = async () => {
-    setIsLoading(true);
-    let products: Array<any> = [];
-    const productsKeys = Object.entries(productsData);
-    for (var x = 0; x < productsKeys.length / 4; x++) {
-      const product: any = {};
-      productsKeys
-        .filter(
-          (e) => e[0].split('-')[1] == (x + 1).toString(),
-        )
-        .forEach((e: any) => {
-          product[e[0].split('-')[0]] = e[1];
-        });
-      products.push({ ...product, materials: [] });
-    }
-    const data = { ...budgetData, products: products };
-
-    try {
-      const token = JSON.parse(
-        localStorage.getItem('token') || '',
-      );
-
-      const url = `${process.env.NEXT_PUBLIC_API_URL}/service_orders`;
-
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
+  const [quoteData, setQuoteData] =
+    React.useState<BudgetType>({
+      deadline: '',
+      is_delivery: true,
+      additional_information: null,
+      address: {
+        cep: '',
+        state: '',
+        city: '',
+        neighborhood: '',
+        complement: '',
+        address_name: '',
+        address_number: undefined,
+      },
+      payment: {
+        payment_method: '',
+        incoming_percentage: undefined,
+        installments: undefined,
+        payment_incoming: '',
+      },
+      proposals: [
+        {
+          proposal_id: 1,
+          products: [
+            {
+              product_id: undefined,
+              product_description: '',
+              quantity: undefined,
+              height: undefined,
+              width: undefined,
+              m2: undefined,
+              materials: [],
+              price: undefined,
+              discount_percentage: undefined,
+            },
+          ],
         },
-        body: JSON.stringify(data),
-      });
+      ],
+      client_id: undefined,
+      client_name: '',
+      quote_status: '',
+      sales_responsible: '',
+    });
 
-      const responseData = await response.json();
+  const handleSubmit = async () => {};
 
-      if (responseData.service_order_id) {
-        toast({
-          description:
-            'Ordem de serviço criada com sucesso!',
-          variant: 'default',
-        });
-        setTimeout(() => {
-          router.push('/admin/service-order');
-        }, 2000);
-      } else {
-        toast({
-          description:
-            'Erro ao criar ordem de serviço. Tente novamente',
-          variant: 'destructive',
-        });
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-    setIsLoading(false);
-  };
-
-  const addProductOption = () => {
-    setHasProductOptions(true);
-    setSelectedProductOption('');
-  };
   return (
     <div className="">
-      <Modais
-        materialsDone={materialsDone}
-        setMaterialsDone={setMaterialsDone}
-        materials={materials}
-        materialsData={materialsData}
-        setMaterials={setMaterials}
-        setMaterialsData={setMaterialsData}
-        setSelectClients={setSelectClients}
-      />
       <Files />
       <div className="grid grid-cols-2 gap-4 w-[98%]">
         <Budget
-          budgetData={budgetData}
-          selectClients={selectClients}
-          setSelectClients={setSelectClients}
-          setBudgetData={setBudgetData}
-          selectedClient={selectedClient}
-          setSelectedClient={setSelectedClient}
+          quoteData={quoteData}
+          setQuoteData={setQuoteData}
         />
         <Payment
-          paymentData={budgetData}
-          setPaymentData={setBudgetData}
+          quoteData={quoteData}
+          setQuoteData={setQuoteData}
         />
       </div>
       <Address
-        selectClients={selectClients}
-        selectedClient={selectedClient}
-        addressData={addressData}
-        setAddressData={setAddressData}
+        quoteData={quoteData}
+        setQuoteData={setQuoteData}
       />
       <Products
-        selectedProductOption={selectedProductOption}
-        setSelectedProductOption={setSelectedProductOption}
-        hasProductOptions={hasProductOptions}
-        setHasProductOptions={setHasProductOptions}
-        productsData={secondOptionData}
-        materialsDone={materialsDone}
-        setFormData={setSecondOptionData}
-        option={'01'}
-        setMaterials={setMaterials}
-        setMaterialsData={setMaterialsData}
-        materialsData={materialsData}
+        quoteData={quoteData}
+        setQuoteData={setQuoteData}
       />
-      {hasProductOptions ? (
-        <Products
-          selectedProductOption={selectedProductOption}
-          setSelectedProductOption={
-            setSelectedProductOption
-          }
-          setMaterials={setMaterials}
-          hasProductOptions={hasProductOptions}
-          setHasProductOptions={setHasProductOptions}
-          productsData={productsData}
-          setFormData={setProductsData}
-          setMaterialsData={setMaterialsData}
-          materialsData={materialsData}
-          option={'02'}
-        />
-      ) : (
-        <></>
-      )}
 
-      <div className="w-[30%] ml-auto mr-9 flex">
+      <div className="w-[15%] ml-auto mr-9 flex">
         <Button
           type="submit"
           variant={'outline'}
           onClick={() => {
-            document.getElementById('arquivos')?.click();
+            quoteData.proposals.push({
+              proposal_id: 2,
+              products: [
+                {
+                  product_id: undefined,
+                  product_description: '',
+                  quantity: undefined,
+                  height: undefined,
+                  width: undefined,
+                  m2: undefined,
+                  materials: [],
+                  price: undefined,
+                  discount_percentage: undefined,
+                },
+              ],
+            });
+            setQuoteData({ ...quoteData });
+            document.getElementById('add-product')?.click();
           }}
-        >
-          Arquivos
-        </Button>
-        <Button
-          type="submit"
-          variant={'outline'}
-          onClick={() => {}}
-        >
-          Solicitar Arte
-        </Button>
-        <Button
-          type="submit"
-          variant={'outline'}
-          onClick={addProductOption}
         >
           Adicionar Opção
         </Button>

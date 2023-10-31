@@ -9,6 +9,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 export function VersattiModal({
   buttonId,

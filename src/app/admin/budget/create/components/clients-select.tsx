@@ -37,11 +37,9 @@ export default function ClientsSelect({
           className="w-full justify-between"
         >
           {selectedClient
-            ? options
-                .map((e: any) => e.toLowerCase())
-                .find(
-                  (option: any) => option == selectedClient,
-                )
+            ? options.find(
+                (option: any) => option == selectedClient,
+              )?.client_name
             : placeholder}
           <ChevronsUpDown className="mr-6 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -67,12 +65,12 @@ export default function ClientsSelect({
           <CommandGroup>
             {options.map((option: any) => (
               <CommandItem
-                key={option}
+                key={option.client_id}
                 onSelect={(currentValue: any) => {
                   setSelectedClient(
                     currentValue === selectedClient
                       ? ''
-                      : currentValue,
+                      : option,
                   );
                   setOpen(false);
                 }}
@@ -85,7 +83,7 @@ export default function ClientsSelect({
                       : 'opacity-0',
                   )}
                 />
-                {option}
+                {option.client_name}
               </CommandItem>
             ))}
           </CommandGroup>

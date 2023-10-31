@@ -21,27 +21,18 @@ import { useEffect } from 'react';
 export default function Materials({
   materials,
   setMaterials,
-  materialsData,
-  setMaterialsData,
+  productsData,
+  setProductsData,
+  id,
+  proposal,
 }: any) {
   useEffect(() => {
-    setMaterialsData(materials);
-    const productId = localStorage.getItem(
-      'product-material',
+    setMaterials(
+      materials.map((e: any, index: any) => {
+        return { ...e, id: index };
+      }),
     );
-    console.log(productId);
-    if (productId) {
-      const materialData =
-        localStorage.getItem(`material-${productId}`) || '';
-      console.log(materialData);
-      if (materialData != '') {
-        setMaterialsData(JSON.parse(materialData));
-      }
-    } else {
-      setMaterialsData(materials);
-    }
   }, [materials]);
-
   return (
     <div>
       <Table>
@@ -68,29 +59,44 @@ export default function Materials({
                   <Select
                     name={''}
                     value={
-                      materialsData.find(
-                        (x: any) =>
-                          x.material == material.material,
-                      )?.color || ''
+                      productsData.proposals[
+                        proposal - 1
+                      ].products[id].materials.find(
+                        (item: any) =>
+                          item.id == material.id,
+                      )?.color
                     }
                     onValueChange={(e: any) => {
-                      console.log(materialsData);
+                      const newMaterialData =
+                        productsData.proposals[proposal - 1]
+                          .products[id];
+
                       const materialFinded =
-                        materialsData.find(
+                        newMaterialData.materials.find(
                           (item: any) =>
-                            item.material ==
-                            material.material,
+                            item.id == material.id,
                         );
 
-                      materialFinded.color = e;
+                      if (materialFinded) {
+                        materialFinded.color = e;
 
-                      const updatedMaterialsData = [
-                        ...materialsData,
-                      ];
-
-                      setMaterialsData(
-                        updatedMaterialsData,
-                      );
+                        setProductsData({
+                          ...productsData,
+                        });
+                      } else {
+                        productsData.proposals[
+                          proposal - 1
+                        ].products[id].materials.push({
+                          id: material.id,
+                          material: material.material,
+                          color: e,
+                          thickness: '',
+                        });
+                        console.log(productsData);
+                        setProductsData({
+                          ...productsData,
+                        });
+                      }
                     }}
                   >
                     <SelectTrigger className="w-full border-none">
@@ -108,32 +114,49 @@ export default function Materials({
                 <TableCell className="w-[10%] font-medium p-0">
                   <Input
                     className="border-none"
-                    type="text"
+                    type="number"
                     placeholder="Expessura "
                     value={
-                      materialsData.find(
-                        (x: any) =>
-                          x.material == material.material,
-                      )?.thickness || ''
+                      productsData.proposals[
+                        proposal - 1
+                      ].products[id].materials.find(
+                        (item: any) =>
+                          item.id == material.id,
+                      )?.thickness
                     }
                     onChange={(e: any) => {
+                      const newMaterialData =
+                        productsData.proposals[proposal - 1]
+                          .products[id];
+
                       const materialFinded =
-                        materialsData.find(
+                        newMaterialData.materials.find(
                           (item: any) =>
-                            item.material ==
-                            material.material,
+                            item.id == material.id,
                         );
-                      console.log(materialFinded);
-                      materialFinded.thickness =
-                        e.target.value;
 
-                      const updatedMaterialsData = [
-                        ...materialsData,
-                      ];
+                      if (materialFinded) {
+                        materialFinded.thickness =
+                          e.target.value;
 
-                      setMaterialsData(
-                        updatedMaterialsData,
-                      );
+                        setProductsData({
+                          ...productsData,
+                        });
+                      } else {
+                        productsData.proposals[
+                          proposal - 1
+                        ].products[id].materials.push({
+                          id: material.id,
+                          material: material.material,
+                          color: '',
+                          thickness: Number(e.target.value),
+                        });
+
+                        setProductsData({
+                          ...productsData,
+                        });
+                      }
+                      console.log(productsData);
                     }}
                     name={``}
                   />
@@ -147,9 +170,15 @@ export default function Materials({
                       width={20}
                       height={20}
                       onClick={() => {
+                        const newMaterial = {
+                          id: materials.length + 2,
+                          colors: material.colors,
+                          thickness: material.thickness,
+                          material: material.material,
+                        };
                         setMaterials([
                           ...materials,
-                          material,
+                          newMaterial,
                         ]);
                       }}
                     />
