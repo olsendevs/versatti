@@ -8,6 +8,9 @@ import Payment from './components/payment';
 import Address from './components/address';
 import Files from './components/files';
 import { BudgetType } from '@/types/budget';
+import { useLoading } from '@/components/ui/is-loading';
+import { useRouter } from 'next/navigation';
+import { toast } from '@/components/ui/use-toast';
 
 export default function CreateServiceOrderPage() {
   const [quoteData, setQuoteData] =
@@ -54,8 +57,49 @@ export default function CreateServiceOrderPage() {
       sales_responsible: '',
     });
 
-  const handleSubmit = async () => {};
+  const { setIsLoading } = useLoading();
+  const router = useRouter();
 
+  const handleSubmit = async () => {
+    setIsLoading(true);
+
+    try {
+      const token = JSON.parse(
+        localStorage.getItem('token') || '',
+      );
+
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/quotes`;
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(quoteData),
+      });
+      console.log(response);
+      console.log(quoteData);
+      if (response.status == 201) {
+        toast({
+          description: 'Orçamento criado com sucesso!',
+          variant: 'default',
+        });
+        setTimeout(() => {
+          router.push('/admin/budget');
+        }, 2000);
+      } else {
+        toast({
+          description:
+            'Erro ao criar orçamento. Tente novamente',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    setIsLoading(false);
+  };
   return (
     <div className="">
       <Files />
